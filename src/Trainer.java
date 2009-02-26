@@ -4,12 +4,26 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-
+/**
+ * The trainer is the main program for voc training
+ * @author igor
+ */
 public class Trainer
 {
+	/**
+	 * The book used for training
+	 */
 	private Book book = new Book();
+	
+	/**
+	 * A book that contains all wrong answers
+	 */
 	private Book wrongAnswers = new Book();
 	
+	/**
+	 * Select a file
+	 * @return selected file
+	 */
 	public File select()
 	{
 		System.out.println("Please enter voc file: (leave blank to cancel)");
@@ -46,7 +60,11 @@ public class Trainer
 		
 		return file;
 	}
-
+	
+	/**
+	 * Load entries from a file
+	 * @param file the file to load from
+	 */
 	public void load(File file)
 	{
 		if (file == null)
@@ -92,6 +110,12 @@ public class Trainer
 		}
 	}
 	
+	/**
+	 * Process a test
+	 * @param verbose	if enabled extra info about beginning and ending the test
+	 * 					is displayed
+	 * @param recurse	if enabled wrong answers are asked repeatedly 
+	 */
 	public void test(boolean verbose, boolean recurse)
 	{
 		// don't test empty books
@@ -154,16 +178,27 @@ public class Trainer
 		}
 	}
 	
+	/**
+	 * default settings of test()
+	 */
 	public void test()
 	{
 		test(true, true);
 	}
 	
+	/**
+	 * Replace the current book with a new one
+	 * @param book the new book
+	 */
 	public void setBook(Book book)
 	{
 		this.book = book;
 	}
 
+	/**
+	 * The main program with argument parsing
+	 * @param args command line arguments
+	 */
 	public static void main(String[] args)
 	{
 		boolean recursive = false;
