@@ -21,6 +21,16 @@ public class Trainer
 	private Book wrongAnswers = new Book();
 	
 	/**
+	 * When set to recurse, all wrong answers are repeated
+	 */
+	private boolean recursive = false;
+	
+	/**
+	 * When set, the questions are randomised (yes, i'm british)
+	 */
+	private boolean random = true;
+	
+	/**
 	 * Select a file
 	 * @return selected file
 	 */
@@ -40,7 +50,7 @@ public class Trainer
 			{
 				if (file != null)
 				{
-					System.out.println("File doesn't exist.");
+					System.out.println("File doesn't exist. Try again.");
 				}
 				
 				input = br.readLine();
@@ -116,12 +126,18 @@ public class Trainer
 	 * 					is displayed
 	 * @param recurse	if enabled wrong answers are asked repeatedly 
 	 */
-	public void test(boolean verbose, boolean recurse)
+	public void test(boolean verbose)
 	{
 		// don't test empty books
 		if (book.isEmpty())
 		{
 			return;
+		}
+		
+		// shuffle book
+		if (random)
+		{
+			book.shuffle();
 		}
 		
 		if (verbose)
@@ -154,13 +170,14 @@ public class Trainer
 		
 		if (!wrongAnswers.isEmpty())
 		{
-			if (recurse)
+			if (recursive)
 			{
 				System.out.println(wrongAnswers.size() + " wrong answers. Repeating wrong answers.");
 				
 				Trainer trainer = new Trainer();
 				trainer.setBook(wrongAnswers);
-				trainer.test(false, true);
+				trainer.test(false);
+				trainer.setRecursive(true);
 			}
 			else
 			{
@@ -183,7 +200,7 @@ public class Trainer
 	 */
 	public void test()
 	{
-		test(true, true);
+		test(true);
 	}
 	
 	/**
@@ -194,6 +211,24 @@ public class Trainer
 	{
 		this.book = book;
 	}
+	
+	/**
+	 * Set recursion
+	 * @param recursive value for recursive
+	 */
+	public void setRecursive(boolean recursive)
+	{
+		this.recursive = recursive;
+	}
+	
+	/**
+	 * Set randomisation
+	 * @param random value for random
+	 */
+	public void setRandom(boolean random)
+	{
+		this.random = random;
+	}
 
 	/**
 	 * The main program with argument parsing
@@ -201,7 +236,8 @@ public class Trainer
 	 */
 	public static void main(String[] args)
 	{
-		boolean recursive = false;
+		boolean recursive	= false;
+		boolean random		= true;
 		File file = null;
 		
 		for (int i = 0; i < args.length; i++)
@@ -212,6 +248,10 @@ public class Trainer
 				{
 					recursive = true;
 				}
+				else if (args[i].equals("no-random"))
+				{
+					random = false;
+				}
 				else if (args[i].equals("-h") || args[i].equals("--help"))
 				{
 					System.out.println("usage: voctrainer [options] [file]");
@@ -220,6 +260,7 @@ public class Trainer
 					System.out.println("Available options:");
 					System.out.println("  -r, --recursive        repeat wrong answers");
 					System.out.println("  -h, --help             this text");
+					System.out.println("      --no-random        no randomised order");
 					return;
 				}
 				else
@@ -244,6 +285,10 @@ public class Trainer
 		}
 		
 		trainer.load(file);
-		trainer.test(true, recursive);
+		
+		trainer.setRandom(random);
+		trainer.setRecursive(recursive);
+		
+		trainer.test(true);
 	}
 }

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 /**
@@ -78,6 +79,14 @@ public class Book implements Iterable<Entry>
 	public int size()
 	{
 		return words.size();
+	}
+	
+	/**
+	 * Shuffle words
+	 */
+	public void shuffle()
+	{
+		Collections.shuffle(words);
 	}
 	
 	/**
