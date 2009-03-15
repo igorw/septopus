@@ -1,3 +1,4 @@
+package model;
 
 /**
  * An entry contains two words. One known and one unknown.
