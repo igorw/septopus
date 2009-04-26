@@ -22,38 +22,51 @@ public class CLI
 	 */
 	public static void main(String[] args)
 	{
-		int mode = -1;
+		int mode = MODE_TRAINER;
 		boolean recursive	= false;
 		boolean random		= true;
 		File file = null;
-		
-		int mainArgs = 0;
 		
 		for (int i = 0; i < args.length; i++)
 		{
 			if (args[i].startsWith("-"))
 			{
+				// options
 				if (args[i].equals("-r") || args[i].equals("--recursive"))
 				{
 					recursive = true;
 				}
-				else if (args[i].equals("no-random"))
+				else if (args[i].equals("--no-random"))
 				{
 					random = false;
 				}
+				else if (args[i].equals("-m") || args[i].equals("--mode"))
+				{
+					if (args.length >= i)
+					{
+						i++;
+						
+						if (args[i].equals("trainer"))
+						{
+							mode = MODE_TRAINER;
+						}
+						else if (args[i].equals("presentation"))
+						{
+							mode = MODE_PRESENTATION;
+						}
+					}
+				}
 				else if (args[i].equals("-h") || args[i].equals("--help"))
 				{
-					System.out.println("usage: voctrainer [mode] [options] [file]");
+					System.out.println("usage: voctrainer [options] [file]");
 					System.out.println("Vocabulary trainer.");
-					System.out.println("");
-					System.out.println("Available modes:");
-					System.out.println("  trainer                normal mode");
-					System.out.println("  presentation           view words");
 					System.out.println("");
 					System.out.println("Available options:");
 					System.out.println("  -r, --recursive        repeat wrong answers");
-					System.out.println("  -h, --help             this text");
 					System.out.println("      --no-random        no randomised order");
+					System.out.println("  -m, --mode=MODE        set the mode, default is trainer");
+					System.out.println("                         possible values: trainer, presentation");
+					System.out.println("  -h, --help             display this text and exit");
 					return;
 				}
 				else
@@ -64,34 +77,10 @@ public class CLI
 			}
 			else
 			{
-				switch (mainArgs++)
-				{
-					case 0:
-						if (args[i].equals("trainer"))
-						{
-							mode = MODE_TRAINER;
-						}
-						else if (args[i].equals("presentation"))
-						{
-							mode = MODE_PRESENTATION;
-						}
-						else
-						{
-							System.out.println("Invalid mode given.");
-							return;
-						}
-						break;
-					case 1:
-						file = new File(args[i]);
-						break;
-				}
+				// main arguments
+				// voc file
+				file = new File(args[i]);
 			}
-		}
-		
-		if (mainArgs < 1)
-		{
-			System.out.println("not enough arguments given");
-			return;
 		}
 		
 		System.out.println("voc trainer (c) 2009 by igor wiedler");
@@ -117,17 +106,22 @@ public class CLI
 		}
 		else if (mode == MODE_PRESENTATION)
 		{
-			GuiPresentation p = new GuiPresentation();
-			p.setTitle("Voc Presentation");
-			
 			// shuffle words
 			if (random)
 			{
 				book.shuffle();
 			}
 			
-			p.setBook(book);
-			p.present();
+			GuiPresentation p = new GuiPresentation(book);
+			
+			try
+			{
+				p.present();
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 }

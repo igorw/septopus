@@ -13,36 +13,72 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import model.Book;
-import model.Word;
+import controller.Presentation;
 
-public class GuiPresentation extends JFrame
+public class GuiPresentation extends Presentation
 {
-	private static final long serialVersionUID = 1L;
-
 	/**
-	 * Contains our data
+	 * The frame that contains the gui
 	 */
-	private Book book = new Book();
+	private JFrame frame = new JFrame();
 	
 	/**
 	 * The first word
 	 */
-	private JLabel firstLabel = new JLabel("", JLabel.CENTER);
+	private JLabel leftLabel = new JLabel("", JLabel.CENTER);
 	
 	/**
 	 * The second word
 	 */
-	private JLabel secondLabel = new JLabel("", JLabel.CENTER);
+	private JLabel rightLabel = new JLabel("", JLabel.CENTER);
 	
-	/**
-	 * Constructor
-	 */
-	public GuiPresentation()
+	public GuiPresentation(Book book)
 	{
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		super(book);
+		
+		initGUI();
+	}
+	
+	public boolean nextWord()
+	{
+		boolean result = super.nextWord();
+		
+		if (result)
+		{
+			leftLabel.setText(word.getLeft());
+			rightLabel.setText(word.getRight());
+		}
+		
+		return result;
+	}
+
+	public void prepare()
+	{
+		frame.setVisible(true);
+	}
+
+	public void showLeft()
+	{
+		leftLabel.setVisible(true);
+	}
+
+	public void showRight()
+	{
+		rightLabel.setVisible(true);
+	}
+
+	public void showNone()
+	{
+		leftLabel.setVisible(false);
+		rightLabel.setVisible(false);
+	}
+
+	public void initGUI()
+	{
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// Exitig program on mouse click
-		addMouseListener(new MouseListener() {
+		frame.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e)
 			{
 				System.exit(0);
@@ -54,7 +90,7 @@ public class GuiPresentation extends JFrame
 		});
 		
 		// add key listener
-		addKeyListener(new KeyListener() {
+		frame.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {}
 			public void keyReleased(KeyEvent e)
 			{
@@ -67,95 +103,30 @@ public class GuiPresentation extends JFrame
 		});
 
 		// remove window frame 
-		setUndecorated(true);
+		frame.setUndecorated(true);
 
 		// switching to fullscreen mode
-		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(this);
+		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(frame);
 		
 		// content pane
-		setContentPane(new JPanel());
+		frame.setContentPane(new JPanel());
 		
 		// set font size
-		setFont(new Font(null, Font.CENTER_BASELINE, 30));
-		firstLabel.setFont(getFont());
-		secondLabel.setFont(getFont());
+		frame.setFont(new Font(null, Font.CENTER_BASELINE, 30));
+		leftLabel.setFont(frame.getFont());
+		rightLabel.setFont(frame.getFont());
 		
 		// set layout
-		getContentPane().setLayout(new GridLayout(0, 1));
+		frame.getContentPane().setLayout(new GridLayout(0, 1));
 		
 		// add labels
-		getContentPane().add(new JLabel());
-		getContentPane().add(firstLabel);
-		getContentPane().add(secondLabel);
-		getContentPane().add(new JLabel());
-	}
-	
-	/**
-	 * Start the presentation
-	 */
-	public void present()
-	{
-		setVisible(true);
+		frame.getContentPane().add(new JLabel());
+		frame.getContentPane().add(leftLabel);
+		frame.getContentPane().add(rightLabel);
+		frame.getContentPane().add(new JLabel());
 		
-		for (Word word : book)
-		{
-			// show left word
-			setFirst(word.getRight());
-			
-			GuiPresentation.sleep(2);
-			
-			// show right word
-			setSecond(word.getLeft());
-			
-			GuiPresentation.sleep(4);
-			
-			// clear known and unknown words
-			setFirst("");
-			setSecond("");
-		}
-		
-		System.exit(0);
-	}
-	
-	/**
-	 * Set the first text
-	 * @param first Text for the first text item
-	 */
-	public void setFirst(String first)
-	{
-		firstLabel.setText(first);
-	}
-	
-	/**
-	 * Set the second text
-	 * @param first Text for the second text item
-	 */
-	public void setSecond(String second)
-	{
-		secondLabel.setText(second);
-	}
-	
-	/**
-	 * Set the book to use
-	 * @param book
-	 */
-	public void setBook(Book book)
-	{
-		this.book = book;
-	}
-	
-	/**
-	 * Wait for some seconds
-	 * @param seconds
-	 */
-	public static void sleep(int seconds)
-	{
-		try
-		{
-			Thread.sleep(seconds * 1000);
-		}
-		catch (InterruptedException e)
-		{
-		}
+		// set label visibility
+		leftLabel.setVisible(false);
+		rightLabel.setVisible(false);
 	}
 }
