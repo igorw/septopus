@@ -1,4 +1,5 @@
 package view;
+
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
@@ -12,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import model.Book;
-import model.Entry;
+import model.Word;
 
 public class GuiPresentation extends JFrame
 {
@@ -96,15 +97,15 @@ public class GuiPresentation extends JFrame
 	{
 		setVisible(true);
 		
-		for (Entry entry : book)
+		for (Word word : book)
 		{
-			// show known word
-			setFirst(entry.getKnown());
+			// show left word
+			setFirst(word.getRight());
 			
 			GuiPresentation.sleep(2);
 			
-			// show unknown word
-			setSecond(entry.getUnknown());
+			// show right word
+			setSecond(word.getLeft());
 			
 			GuiPresentation.sleep(4);
 			

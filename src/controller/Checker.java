@@ -1,4 +1,5 @@
 package controller;
+
 import java.io.File;
 
 /**
@@ -14,6 +15,9 @@ public class Checker
 	 */
 	public boolean check(File file)
 	{
+		/**
+		 * @todo check the file
+		 */
 		return true;
 	}
 }

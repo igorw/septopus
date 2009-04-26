@@ -1,7 +1,7 @@
 package controller;
 
 import model.Book;
-import model.Entry;
+import model.Word;
 
 public class Presentation
 {
@@ -17,7 +17,7 @@ public class Presentation
 		this.book = book;
 	}
 	
-	public Entry nextEntry()
+	public Word nextWord()
 	{
 		if (i >= book.size())
 		{

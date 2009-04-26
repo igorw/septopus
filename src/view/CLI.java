@@ -120,7 +120,7 @@ public class CLI
 			GuiPresentation p = new GuiPresentation();
 			p.setTitle("Voc Presentation");
 			
-			// shuffle entries
+			// shuffle words
 			if (random)
 			{
 				book.shuffle();

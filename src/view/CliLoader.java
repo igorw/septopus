@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import model.Book;
-import model.Entry;
+import model.Word;
 
 public class CliLoader
 {
@@ -53,7 +53,7 @@ public class CliLoader
 	}
 	
 	/**
-	 * Load entries from a file
+	 * Load words from a file
 	 * @param file the file to load from
 	 */
 	public Book load(File file)
@@ -93,7 +93,7 @@ public class CliLoader
 				}
 				
 				token = line.split("\t");
-				book.addEntry(new Entry(token[0], token[1]));
+				book.addWord(new Word(token[0], token[1]));
 			}
 
 			bufRead.close();

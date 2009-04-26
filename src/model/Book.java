@@ -1,13 +1,14 @@
 package model;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
 /**
- * A book contains an array of entries.
+ * A book contains an array of words.
  * @author igor
  */
-public class Book implements Iterable<Entry>
+public class Book implements Iterable<Word>
 {
 	/**
 	 * The name of the book. Every book has a name.
@@ -15,9 +16,9 @@ public class Book implements Iterable<Entry>
 	private String name;
 	
 	/**
-	 * The array of entries
+	 * The array of words
 	 */
-	private ArrayList<Entry> words = new ArrayList<Entry>();
+	private ArrayList<Word> words = new ArrayList<Word>();
 	
 	/**
 	 * Setter for the name
@@ -38,45 +39,45 @@ public class Book implements Iterable<Entry>
 	}
 	
 	/**
-	 * Get a specific entry
+	 * Get a specific word
 	 * @param index
-	 * @return selected entry
+	 * @return selected word
 	 */
-	public Entry get(int index)
+	public Word get(int index)
 	{
 		return words.get(index);
 	}
 	
 	/**
-	 * Add an entry to the book
-	 * @param entry
+	 * Add an word to the book
+	 * @param word
 	 */
-	public void addEntry(Entry entry)
+	public void addWord(Word word)
 	{
-		words.add(entry);
+		words.add(word);
 	}
 	
 	/**
-	 * Replace the whole array of entries with a new one
-	 * @param words array of entries
+	 * Replace the whole array of words with a new one
+	 * @param words array of words
 	 */
-	public void setWords(ArrayList<Entry> words)
+	public void setWords(ArrayList<Word> words)
 	{
 		this.words = words;
 	}
 	
 	/**
-	 * Read the whole array of entries
-	 * @return array of entries
+	 * Read the whole array of words
+	 * @return array of words
 	 */
-	public ArrayList<Entry> getWords()
+	public ArrayList<Word> getWords()
 	{
 		return words;
 	}
 	
 	/**
 	 * Check if the book is empty
-	 * @return <code>true</code> if there are more than 0 entries
+	 * @return <code>true</code> if there are more than 0 words
 	 */
 	public boolean isEmpty()
 	{
@@ -84,7 +85,7 @@ public class Book implements Iterable<Entry>
 	}
 	
 	/**
-	 * Get ammount of entries
+	 * Get ammount of words
 	 * @return size of book
 	 */
 	public int size()
@@ -101,9 +102,9 @@ public class Book implements Iterable<Entry>
 	}
 	
 	/**
-	 * Make it possible to iterate through entries
+	 * Make it possible to iterate through words
 	 */
-	public Iterator<Entry> iterator()
+	public Iterator<Word> iterator()
 	{
 		return words.iterator();
 	}

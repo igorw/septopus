@@ -1,10 +1,11 @@
 package controller;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 import model.Book;
-import model.Entry;
+import model.Word;
 
 
 /**
@@ -58,9 +59,9 @@ public class Trainer
 			System.out.println("Beginning test: " + book.getName());
 		}
 		
-		for (Entry entry : book)
+		for (Word word : book)
 		{
-			System.out.println(entry.getKnown());
+			System.out.println(word.getRight());
 
 			InputStreamReader isr = new InputStreamReader(System.in);
 			BufferedReader br = new BufferedReader(isr);
@@ -69,10 +70,10 @@ public class Trainer
 			{
 				String input = br.readLine();
 				
-				if (!input.trim().equals(entry.getUnknown()))
+				if (!input.trim().equals(word.getLeft()))
 				{
-					wrongAnswers.addEntry(entry);
-					System.out.println("Wrong. Correct: " + entry.getUnknown());
+					wrongAnswers.addWord(word);
+					System.out.println("Wrong. Correct: " + word.getRight());
 				}
 			}
 			catch (IOException e)
@@ -95,9 +96,9 @@ public class Trainer
 			else
 			{
 				System.out.println(wrongAnswers.size() + " wrong answers. The are listed here:");
-				for (Entry entry : wrongAnswers)
+				for (Word word : wrongAnswers)
 				{
-					System.out.println(entry.getUnknown() + " - " + entry.getKnown());
+					System.out.println(word.getLeft() + " - " + word.getRight());
 				}
 			}
 		}
