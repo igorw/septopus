@@ -1,4 +1,4 @@
-package gui;
+package view;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import model.Book;
 import model.Entry;
 
-public class Presentation extends JFrame
+public class GuiPresentation extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,7 @@ public class Presentation extends JFrame
 	/**
 	 * Constructor
 	 */
-	public Presentation()
+	public GuiPresentation()
 	{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
@@ -101,12 +101,12 @@ public class Presentation extends JFrame
 			// show known word
 			setFirst(entry.getKnown());
 			
-			Presentation.sleep(2);
+			GuiPresentation.sleep(2);
 			
 			// show unknown word
 			setSecond(entry.getUnknown());
 			
-			Presentation.sleep(4);
+			GuiPresentation.sleep(4);
 			
 			// clear known and unknown words
 			setFirst("");

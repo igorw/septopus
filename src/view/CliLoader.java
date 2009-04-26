@@ -1,4 +1,4 @@
-package cli;
+package view;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import model.Book;
 import model.Entry;
 
-public class Loader
+public class CliLoader
 {
 	/**
 	 * Select a file

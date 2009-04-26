@@ -1,10 +1,11 @@
-package cli;
-import gui.Presentation;
+package view;
 
 import java.io.File;
 
+import controller.Trainer;
+
+
 import model.Book;
-import application.Trainer;
 
 /**
  * Command line interface, it loads everything else
@@ -96,7 +97,7 @@ public class CLI
 		System.out.println("voc trainer (c) 2009 by igor wiedler");
 
 		Book book = null;
-		Loader loader = new Loader();
+		CliLoader loader = new CliLoader();
 		
 		if (file == null)
 		{
@@ -116,7 +117,7 @@ public class CLI
 		}
 		else if (mode == MODE_PRESENTATION)
 		{
-			Presentation p = new Presentation();
+			GuiPresentation p = new GuiPresentation();
 			p.setTitle("Voc Presentation");
 			
 			// shuffle entries

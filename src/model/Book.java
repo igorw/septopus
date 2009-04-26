@@ -38,6 +38,16 @@ public class Book implements Iterable<Entry>
 	}
 	
 	/**
+	 * Get a specific entry
+	 * @param index
+	 * @return selected entry
+	 */
+	public Entry get(int index)
+	{
+		return words.get(index);
+	}
+	
+	/**
 	 * Add an entry to the book
 	 * @param entry
 	 */
