@@ -32,6 +32,15 @@ public class GuiPresentation extends Presentation
 	 */
 	private JLabel rightLabel = new JLabel("", JLabel.CENTER);
 	
+	/**
+	 * is the presentation paused?
+	 */
+	private boolean paused = false;
+	
+	/**
+	 * constructor
+	 * @param book
+	 */
 	public GuiPresentation(Book book)
 	{
 		super(book);
@@ -60,11 +69,15 @@ public class GuiPresentation extends Presentation
 	public void showLeft()
 	{
 		leftLabel.setVisible(true);
+		
+		pausedCheck();
 	}
 
 	public void showRight()
 	{
 		rightLabel.setVisible(true);
+		
+		pausedCheck();
 	}
 
 	public void showNone()
@@ -94,9 +107,14 @@ public class GuiPresentation extends Presentation
 			public void keyPressed(KeyEvent e) {}
 			public void keyReleased(KeyEvent e)
 			{
-				if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
+				switch (e.getKeyCode())
 				{
-					System.exit(0);
+					case KeyEvent.VK_ESCAPE:
+						System.exit(0);
+						break;
+					case KeyEvent.VK_SPACE:
+						paused = !paused;
+						break;
 				}
 			}
 			public void keyTyped(KeyEvent e) {}
@@ -128,5 +146,19 @@ public class GuiPresentation extends Presentation
 		// set label visibility
 		leftLabel.setVisible(false);
 		rightLabel.setVisible(false);
+	}
+	
+	private void pausedCheck()
+	{
+		while (paused)
+		{
+			try
+			{
+				Thread.sleep(1);
+			}
+			catch (InterruptedException e)
+			{
+			}
+		}
 	}
 }

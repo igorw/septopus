@@ -95,6 +95,11 @@ public class CLI
 		
 		book = loader.load(file);
 		
+		if (book == null)
+		{
+			return;
+		}
+		
 		if (mode == MODE_TRAINER)
 		{
 			Trainer trainer = new Trainer();
