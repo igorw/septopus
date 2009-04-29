@@ -77,7 +77,7 @@ public class GuiPresentation extends Presentation
 	{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		// Exitig program on mouse click
+		// Exiting program on mouse click
 		frame.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e)
 			{
@@ -121,8 +121,8 @@ public class GuiPresentation extends Presentation
 		
 		// add labels
 		frame.getContentPane().add(new JLabel());
-		frame.getContentPane().add(leftLabel);
 		frame.getContentPane().add(rightLabel);
+		frame.getContentPane().add(leftLabel);
 		frame.getContentPane().add(new JLabel());
 		
 		// set label visibility

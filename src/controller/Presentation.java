@@ -75,11 +75,11 @@ public abstract class Presentation
 		
 		while (nextWord())
 		{
-			showLeft();
+			showRight();
 			
 			Thread.sleep(2000);
-			
-			showRight();
+
+			showLeft();
 			
 			Thread.sleep(4000);
 			
