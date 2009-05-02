@@ -11,6 +11,7 @@ import model.Word;
 /**
  * The trainer is the main program for voc training
  * @author igor
+ * @todo move sysout stuff to a new cli-view
  */
 public class Trainer
 {
@@ -36,11 +37,8 @@ public class Trainer
 	
 	/**
 	 * Process a test
-	 * @param verbose	if enabled extra info about beginning and ending the test
-	 * 					is displayed
-	 * @param recurse	if enabled wrong answers are asked repeatedly 
 	 */
-	public void test(boolean verbose)
+	public void test()
 	{
 		// don't test empty books
 		if (book.isEmpty())
@@ -52,11 +50,6 @@ public class Trainer
 		if (random)
 		{
 			book.shuffle();
-		}
-		
-		if (verbose)
-		{
-			System.out.println("Beginning test: " + book.getName());
 		}
 		
 		for (Word word : book)
@@ -90,7 +83,7 @@ public class Trainer
 				
 				Trainer trainer = new Trainer();
 				trainer.setBook(wrongAnswers);
-				trainer.test(false);
+				trainer.test();
 				trainer.setRecursive(true);
 			}
 			else
@@ -102,19 +95,6 @@ public class Trainer
 				}
 			}
 		}
-		
-		if (verbose)
-		{
-			System.out.println("End.");
-		}
-	}
-	
-	/**
-	 * default settings of test()
-	 */
-	public void test()
-	{
-		test(true);
 	}
 	
 	/**

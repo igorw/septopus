@@ -81,6 +81,6 @@ public class CliTrainer
 		trainer.setRandom(random);
 		trainer.setRecursive(recursive);
 		
-		trainer.test(true);
+		trainer.test();
 	}
 }
