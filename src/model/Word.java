@@ -1,47 +1,47 @@
 package model;
 
 /**
- * An word is available in two languages, refered to as left and right
+ * An word is available in two languages, refered to as foreign and home
  * @author igor
  */
 public class Word
 {
 	/**
-	 * The word on the left side, usually unknown
+	 * The foreign word, usually unknown
 	 */
-	private String left;
+	private String foreign;
 	
 	/**
-	 * The word on the right side, usually unknown
+	 * The native word, usually known
 	 */
-	private String right;
+	private String home;
 	
 	/**
 	 * Sole constructor, sets unknown and known words
-	 * @param left	Left word
-	 * @param right	Right word
+	 * @param foreign	Left word
+	 * @param home	Right word
 	 */
 	public Word (String left, String right)
 	{
-		this.left	= left;
-		this.right	= right;
+		this.foreign	= left;
+		this.home		= right;
 	}
 	
 	/**
-	 * Getter for the left word
+	 * Getter for the foreign word
 	 * @return unknown word
 	 */
-	public String getLeft()
+	public String getForeign()
 	{
-		return left;
+		return foreign;
 	}
 	
 	/**
-	 * Getter for the right word
+	 * Getter for the home word
 	 * @return known word
 	 */
-	public String getRight()
+	public String getHome()
 	{
-		return right;
+		return home;
 	}
 }
