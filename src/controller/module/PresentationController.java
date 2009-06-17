@@ -4,7 +4,7 @@ import model.Book;
 import model.Word;
 import view.PresentationView;
 
-public class PresentationController extends ModuleBase
+public class PresentationController extends Module
 {
 	/**
 	 * Current index
@@ -51,43 +51,41 @@ public class PresentationController extends ModuleBase
 		
 		return result;
 	}
-	
-	/**
-	 * Present the presentation
-	 * @throws InterruptedException
-	 */
-	public void present() throws InterruptedException
-	{
-		while (nextWord())
-		{
-			view.showHome();
-			
-			Thread.sleep(2000);
-
-			view.showForeign();
-			
-			Thread.sleep(4000);
-			
-			view.showNone();
-		}
-		
-		view.setVisible(false);
-	}
 
 	public void launch(Book book)
 	{
 		setBook(book);
 		
+		// reset
+		i = 0;
+		
 		Thread t = new Thread(new Runnable() {
-			public void run() {
+			public void run()
+			{
 				view = new PresentationView();
 				view.initGUI();
 				
-				try {
-					present();
-				} catch (InterruptedException e) {
+				try
+				{
+					while (nextWord())
+					{
+						view.showHome();
+						
+						Thread.sleep(2000);
+
+						view.showForeign();
+						
+						Thread.sleep(4000);
+						
+						view.showNone();
+					}
+				}
+				catch (InterruptedException e)
+				{
 					e.printStackTrace();
 				}
+				
+				view.setVisible(false);
 			}
 		});
 		t.start();

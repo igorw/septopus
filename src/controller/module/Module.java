@@ -6,7 +6,7 @@ import model.Book;
  * A module for the program
  * @author igor
  */
-public abstract class ModuleBase implements Comparable<ModuleBase>
+public abstract class Module implements Comparable<Module>
 {
 	private String title;
 	private String description;
@@ -66,8 +66,9 @@ public abstract class ModuleBase implements Comparable<ModuleBase>
 	}
 
 	public abstract void launch(Book book);
-
-	public int compareTo(ModuleBase m) {
+	
+	public int compareTo(Module m)
+	{
 		if (getPriority() < m.getPriority())
 		{
 			return 1;

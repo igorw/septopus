@@ -2,9 +2,8 @@ package controller.module;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import model.Book;
 import model.Word;
@@ -16,7 +15,7 @@ import view.TrainerView;
  * @author igor
  * @todo move sysout stuff to a new cli-view
  */
-public class TrainerController extends ModuleBase
+public class TrainerController extends Module
 {
 	/**
 	 * A book that contains all wrong answers
@@ -43,56 +42,6 @@ public class TrainerController extends ModuleBase
 	}
 	
 	/**
-	 * Process a test
-	 */
-	public void test()
-	{
-		// don't test empty books
-		if (book.isEmpty())
-		{
-			return;
-		}
-		
-		// shuffle book
-		if (random)
-		{
-			book.shuffle();
-		}
-		
-		for (Word word : book)
-		{
-			System.out.println(word.getHome());
-
-			InputStreamReader isr = new InputStreamReader(System.in);
-			BufferedReader br = new BufferedReader(isr);
-			
-			try
-			{
-				String input = br.readLine();
-				
-				if (!input.trim().equals(word.getForeign()))
-				{
-					wrongAnswers.addWord(word);
-					System.out.println("Wrong. Correct: " + word.getHome());
-				}
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		
-		if (!wrongAnswers.isEmpty())
-		{
-			System.out.println(wrongAnswers.size() + " wrong answers. The are listed here:");
-			for (Word word : wrongAnswers)
-			{
-				System.out.println(word.getForeign() + " - " + word.getHome());
-			}
-		}
-	}
-	
-	/**
 	 * Set randomisation
 	 * @param random value for random
 	 */
@@ -108,10 +57,15 @@ public class TrainerController extends ModuleBase
 	{
 		setBook(book);
 		
+		// reset
+		index = 0;
+		random = true;
+		
 		view = new TrainerView();
 		view.initGUI();
 		
 		view.addNextActionListener(new NextListener());
+		view.addForeignKeyListener(new NextListener());
 		
 		// shuffle book
 		if (random)
@@ -121,6 +75,10 @@ public class TrainerController extends ModuleBase
 		
 		Word word = thisWord();
 		view.setHome(word.getHome());
+		
+		/**
+		 * @todo display wrong words
+		 */
 	}
 	
 	private Word nextWord()
@@ -143,33 +101,27 @@ public class TrainerController extends ModuleBase
 		return book.get(index);
 	}
 	
-	private class NextListener implements ActionListener {
+	private class NextListener implements ActionListener, KeyListener
+	{
 		private boolean lastWrong = false;
-		public void actionPerformed(ActionEvent e) {
-			
+		
+		private Word word;
+		
+		public void perform()
+		{
 			String input = view.getForeign();
-			Word word = thisWord();
+			word = thisWord();
 			
 			if (lastWrong)
 			{
 				lastWrong = false;
-				word = nextWord();
-				
-				if (word == null)
-				{
-					System.out.println("fertig");
-					return;
-				}
-				
-				view.setHome(word.getHome());
-				view.setForeign("");
-				view.setCorrection("");
+				next();
 				return;
 			}
 			
 			if (word == null)
 			{
-				System.out.println("fertig");
+				view.setVisible(false);
 				return;
 			}
 			
@@ -181,17 +133,38 @@ public class TrainerController extends ModuleBase
 				return;
 			}
 			
+			next();
+		}
+		
+		private void next()
+		{
 			word = nextWord();
 			
 			if (word == null)
 			{
-				System.out.println("fertig");
+				view.setVisible(false);
 				return;
 			}
 			
 			view.setHome(word.getHome());
 			view.setForeign("");
 			view.setCorrection("");
+			view.requestForeignFocus();
 		}
+		
+		public void actionPerformed(ActionEvent e)
+		{
+			perform();
+		}
+
+		public void keyPressed(KeyEvent e)
+		{
+			if (e.getKeyCode() == KeyEvent.VK_ENTER)
+			{
+				perform();
+			}
+		}
+		public void keyReleased(KeyEvent e) {}
+		public void keyTyped(KeyEvent e) {}
 	}
 }
