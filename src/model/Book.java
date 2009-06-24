@@ -21,6 +21,22 @@ public class Book implements Iterable<Word>
 	private ArrayList<Word> words = new ArrayList<Word>();
 	
 	/**
+	 * Constructor
+	 */
+	public Book()
+	{
+	}
+	
+	/**
+	 * Constructor with name
+	 * @param name
+	 */
+	public Book(String name)
+	{
+		setName(name);
+	}
+	
+	/**
 	 * Setter for the name
 	 * @param name
 	 */

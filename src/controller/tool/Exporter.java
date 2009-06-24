@@ -8,7 +8,16 @@ public abstract class Exporter
 {
 	private Book book;
 	
+	public Exporter()
+	{
+	}
+	
 	public Exporter(Book book)
+	{
+		setBook(book);
+	}
+	
+	public void setBook(Book book)
 	{
 		this.book = book;
 	}

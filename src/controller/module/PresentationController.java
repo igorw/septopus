@@ -89,5 +89,11 @@ public class PresentationController extends Module
 			}
 		});
 		t.start();
+		
+		/*try {
+			t.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}*/
 	}
 }

@@ -13,6 +13,11 @@ import model.Word;
  */
 public class LatexExporter extends Exporter
 {
+	public LatexExporter()
+	{
+		super();
+	}
+	
 	public LatexExporter(Book book)
 	{
 		super(book);

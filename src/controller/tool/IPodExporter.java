@@ -10,6 +10,11 @@ import model.Word;
 
 public class IPodExporter extends Exporter
 {
+	public IPodExporter()
+	{
+		super();
+	}
+	
 	public IPodExporter(Book book)
 	{
 		super(book);
@@ -21,6 +26,11 @@ public class IPodExporter extends Exporter
 		String contents;
 		File file;
 		int i, size;
+		
+		if (!destination.exists())
+		{
+			destination.mkdirs();
+		}
 		
 		ArrayList<Word> words = getBook().getWords();
 		

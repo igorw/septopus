@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 
 import model.Book;
 import model.Word;
+import view.TrainerEndView;
 import view.TrainerView;
 
 
@@ -23,7 +24,7 @@ public class TrainerController extends Module
 	private Book wrongAnswers = new Book();
 	
 	/**
-	 * When set, the questions are randomised (yes, i'm british)
+	 * When set, the questions are randomised (yes, i'm British)
 	 */
 	private boolean random = true;
 	
@@ -56,6 +57,14 @@ public class TrainerController extends Module
 	public void launch(Book book)
 	{
 		setBook(book);
+		if (book.getName().endsWith("_wrong"))
+		{
+			wrongAnswers.setName(book.getName());
+		}
+		else
+		{
+			wrongAnswers.setName(book.getName() + "_wrong");
+		}
 		
 		// reset
 		index = 0;
@@ -121,7 +130,7 @@ public class TrainerController extends Module
 			
 			if (word == null)
 			{
-				view.setVisible(false);
+				endSession();
 				return;
 			}
 			
@@ -142,7 +151,7 @@ public class TrainerController extends Module
 			
 			if (word == null)
 			{
-				view.setVisible(false);
+				endSession();
 				return;
 			}
 			
@@ -150,6 +159,22 @@ public class TrainerController extends Module
 			view.setForeign("");
 			view.setCorrection("");
 			view.requestForeignFocus();
+		}
+		
+		private void endSession()
+		{
+			view.setVisible(false);
+			
+			TrainerEndView endView = new TrainerEndView();
+			endView.initGUI();
+			endView.addRetryActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e)
+				{
+					TrainerController trainer = new TrainerController();
+					trainer.launch(wrongAnswers);
+					//endView.setVisible(false);
+				}
+			});
 		}
 		
 		public void actionPerformed(ActionEvent e)
