@@ -4,7 +4,7 @@ import model.Book;
 import model.Word;
 import view.PresentationView;
 
-public class PresentationController extends Module
+public class PresentationController extends Controller
 {
 	/**
 	 * Current index
@@ -18,29 +18,18 @@ public class PresentationController extends Module
 	
 	private PresentationView view;
 	
-	/**
-	 * Constructor
-	 * @param book
-	 */
-	public PresentationController()
-	{
-		setTitle("Presentation");
-		setDescription("Watch your vocab.");
-		setPriority(8);
-	}
-	
 	public boolean nextWord()
 	{
 		boolean result;
 		
-		if (i >= book.size())
+		if (i >= getBook().size())
 		{
 			result = false;
 		}
 		else
 		{
 			result = true;
-			word = book.get(i++);
+			word = getBook().get(i++);
 		}
 		
 		if (result)

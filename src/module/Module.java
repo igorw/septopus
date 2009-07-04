@@ -1,6 +1,7 @@
-package controller.module;
+package module;
 
-import model.Book;
+import controller.module.Controller;
+
 
 /**
  * A module for the program
@@ -15,11 +16,6 @@ public abstract class Module implements Comparable<Module>
 	 * Priority between 0 (lowest) and 9 (highest)
 	 */
 	private int priority;
-	
-	/**
-	 * The book used for training
-	 */
-	protected Book book;
 	
 	public String getTitle()
 	{
@@ -51,21 +47,10 @@ public abstract class Module implements Comparable<Module>
 		this.priority = priority;
 	}
 	
-	/**
-	 * Replace the current book with a new one
-	 * @param book the new book
-	 */
-	public void setBook(Book book)
-	{
-		this.book = book;
-	}
-	
 	public String toString()
 	{
 		return title;
 	}
-
-	public abstract void launch(Book book);
 	
 	public int compareTo(Module m)
 	{
@@ -82,4 +67,6 @@ public abstract class Module implements Comparable<Module>
 			return getTitle().compareTo(m.getTitle());
 		}
 	}
+	
+	public abstract Controller getController();
 }

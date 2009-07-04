@@ -2,6 +2,7 @@ package controller.module;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -11,6 +12,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import model.Book;
+import module.Module;
+import view.AboutView;
 import view.HomeView;
 import controller.tool.Loader;
 
@@ -27,10 +30,33 @@ public class HomeController
 	
 	public HomeController()
 	{
-		// add modules
-		modules.add(new TrainerController());
-		modules.add(new PresentationController());
-		modules.add(new ExportController());
+		// add modules dynamically
+		for (String file : new File("bin/module").list())
+		{
+			String moduleName = file.substring(0, file.indexOf("."));
+			if (moduleName.endsWith("Module") && !moduleName.equals("Module"))
+			{
+				try
+				{
+					Class c = Class.forName("module." + moduleName);
+					modules.add((Module)c.newInstance());
+				}
+				catch (ClassNotFoundException e)
+				{
+					e.printStackTrace();
+				}
+				catch (InstantiationException e)
+				{
+					e.printStackTrace();
+				}
+				catch (IllegalAccessException e)
+				{
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
 		Collections.sort(modules);
 		
 		view = new HomeView(modules);
@@ -39,7 +65,7 @@ public class HomeController
 		view.addStartActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				view.getSelectedModule().launch(getBook());
+				view.getSelectedModule().getController().launch(getBook());
 			}
 		});
 		
@@ -71,6 +97,14 @@ public class HomeController
 					{
 					}
 				}
+			}
+		});
+		
+		view.addHelpActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				AboutView view = new AboutView();
+				view.initGUI();
 			}
 		});
 	}

@@ -20,7 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.event.ListSelectionListener;
 
-import controller.module.Module;
+import module.Module;
+
 
 public class HomeView extends JFrame
 {
@@ -29,6 +30,8 @@ public class HomeView extends JFrame
 	private JMenuBar menu = new JMenuBar();
 	private JMenu menuFile = new JMenu("File");
 	private JMenuItem menuFileOpen = new JMenuItem("Open file");
+	private JMenu menuHelp = new JMenu("Help");
+	private JMenuItem menuHelpAbout = new JMenuItem("About");
 	private JList lsModules;
 	private JTextArea taModuleDesc = new JTextArea();
 	private JButton btStart = new JButton("Start");
@@ -56,6 +59,9 @@ public class HomeView extends JFrame
 
 		menu.add(menuFile);
 		menuFile.add(menuFileOpen);
+
+		menu.add(menuHelp);
+		menuHelp.add(menuHelpAbout);
 		
 		GroupLayout layout = new GroupLayout(getContentPane());
 		layout.setAutoCreateGaps(true);
@@ -138,5 +144,10 @@ public class HomeView extends JFrame
 	{
 		lbSelectedValue.setText(selectedFile.getName());
 		btStart.setEnabled(true);
+	}
+	
+	public void addHelpActionListener(ActionListener l)
+	{
+		menuHelpAbout.addActionListener(l);
 	}
 }

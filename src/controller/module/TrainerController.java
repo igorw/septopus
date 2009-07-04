@@ -5,10 +5,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JFileChooser;
+
 import model.Book;
 import model.Word;
 import view.TrainerEndView;
 import view.TrainerView;
+import controller.exporter.Exporter;
+import controller.exporter.PlainExporter;
 
 
 /**
@@ -16,7 +20,7 @@ import view.TrainerView;
  * @author igor
  * @todo move sysout stuff to a new cli-view
  */
-public class TrainerController extends Module
+public class TrainerController extends Controller
 {
 	/**
 	 * A book that contains all wrong answers
@@ -31,16 +35,6 @@ public class TrainerController extends Module
 	private TrainerView view;
 	
 	private int index = 0;
-	
-	/**
-	 * Constructor
-	 */
-	public TrainerController()
-	{
-		setTitle("Trainer");
-		setDescription("Test your vocabulary until you crack.");
-		setPriority(9);
-	}
 	
 	/**
 	 * Set randomisation
@@ -92,22 +86,22 @@ public class TrainerController extends Module
 	
 	private Word nextWord()
 	{
-		if (index + 1 == book.size())
+		if (index + 1 == getBook().size())
 		{
 			return null;
 		}
 		
-		return book.get(++index);
+		return getBook().get(++index);
 	}
 	
 	private Word thisWord()
 	{
-		if (index == book.size())
+		if (index == getBook().size())
 		{
 			return null;
 		}
 		
-		return book.get(index);
+		return getBook().get(index);
 	}
 	
 	private class NextListener implements ActionListener, KeyListener
@@ -115,6 +109,8 @@ public class TrainerController extends Module
 		private boolean lastWrong = false;
 		
 		private Word word;
+		
+		private TrainerEndView endView;
 		
 		public void perform()
 		{
@@ -165,14 +161,41 @@ public class TrainerController extends Module
 		{
 			view.setVisible(false);
 			
-			TrainerEndView endView = new TrainerEndView();
+			endView = new TrainerEndView();
 			endView.initGUI();
 			endView.addRetryActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e)
 				{
 					TrainerController trainer = new TrainerController();
 					trainer.launch(wrongAnswers);
-					//endView.setVisible(false);
+					endView.setVisible(false);
+				}
+			});
+			endView.addSaveActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e)
+				{
+					JFileChooser chooser = new JFileChooser();
+					int returnVal = chooser.showOpenDialog(endView);
+					if (returnVal == JFileChooser.APPROVE_OPTION)
+					{
+						Exporter ex = new PlainExporter();
+						ex.setBook(getBook());
+						try
+						{
+							ex.export(chooser.getSelectedFile());
+						}
+						catch (Exception e1)
+						{
+							e1.printStackTrace();
+						}
+					}
+					endView.setVisible(false);
+				}
+			});
+			endView.addCancelActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e)
+				{
+					endView.setVisible(false);
 				}
 			});
 		}

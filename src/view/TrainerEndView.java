@@ -17,7 +17,7 @@ public class TrainerEndView extends JFrame
 	
 	public void initGUI()
 	{
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		setTitle("End of session");
 		setSize(400, 200);

@@ -1,10 +1,7 @@
-package controller.tool;
+package controller.exporter;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 
-import model.Book;
 import model.Word;
 
 /**
@@ -13,16 +10,6 @@ import model.Word;
  */
 public class LatexExporter extends Exporter
 {
-	public LatexExporter()
-	{
-		super();
-	}
-	
-	public LatexExporter(Book book)
-	{
-		super(book);
-	}
-
 	public void export(File destination) throws Exception
 	{
 		StringBuffer contents = new StringBuffer();
@@ -71,8 +58,6 @@ public class LatexExporter extends Exporter
 		contents.append("\n");
 		contents.append("\\end{document}\n");
 		
-		BufferedWriter out = new BufferedWriter(new FileWriter(destination));
-		out.write(contents.toString());
-		out.close();
+		writeFile(destination, contents.toString());
 	}
 }

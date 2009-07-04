@@ -6,19 +6,16 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 import model.Book;
-import controller.tool.Exporter;
-import controller.tool.IPodExporter;
-import controller.tool.LatexExporter;
+import controller.exporter.Exporter;
+import controller.exporter.FlashcardExporter;
+import controller.exporter.IPodExporter;
+import controller.exporter.LatexExporter;
 
-public class ExportController extends Module
+/**
+ * Controller for the export module
+ */
+public class ExportController extends Controller
 {
-	public ExportController()
-	{
-		setTitle("Export");
-		setDescription("Export to various formats.");
-		setPriority(7);
-	}
-
 	public void launch(Book book)
 	{
 		setBook(book);
@@ -26,8 +23,9 @@ public class ExportController extends Module
 		JFileChooser chooser = new JFileChooser();
 
 		chooser.setSelectedFile(new File(book.getName()));
-		chooser.addChoosableFileFilter(new LatexFilter());
 		chooser.addChoosableFileFilter(new IPodFilter());
+		chooser.addChoosableFileFilter(new LatexFilter());
+		chooser.addChoosableFileFilter(new FlashcardFilter());
 		chooser.setAcceptAllFileFilterUsed(false);
 		
 		int returnVal = chooser.showOpenDialog(null);
@@ -91,6 +89,39 @@ public class ExportController extends Module
 		public Exporter getExporter()
 		{
 			return new LatexExporter();
+		}
+	}
+	
+	private class FlashcardFilter extends ExportFilter
+	{
+		public boolean accept(File f)
+		{
+			if (f.isDirectory())
+			{
+				return true;
+			}
+			
+			if (f.getName().endsWith(".tex"))
+			{
+				return true;
+			}
+			
+			return false;
+		}
+
+		public String getDescription()
+		{
+			return "LaTeX Flashcard (*.tex)";
+		}
+
+		public String getExtension()
+		{
+			return ".tex";
+		}
+
+		public Exporter getExporter()
+		{
+			return new FlashcardExporter();
 		}
 	}
 	
