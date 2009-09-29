@@ -13,6 +13,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * The presentation window
+ */
 public class PresentationView extends JFrame
 {
 	private static final long serialVersionUID = 1L;
@@ -31,14 +34,6 @@ public class PresentationView extends JFrame
 	 * is the presentation paused?
 	 */
 	private boolean paused = false;
-	
-	/**
-	 * constructor
-	 * @param book
-	 */
-	public PresentationView()
-	{
-	}
 	
 	public void setForeign(String foreign)
 	{
@@ -70,6 +65,9 @@ public class PresentationView extends JFrame
 		homeLabel.setVisible(false);
 	}
 
+	/**
+	 * Initialise the GUI
+	 */
 	public void initGUI()
 	{
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);

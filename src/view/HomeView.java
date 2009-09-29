@@ -22,7 +22,9 @@ import javax.swing.event.ListSelectionListener;
 
 import module.Module;
 
-
+/**
+ * The home window
+ */
 public class HomeView extends JFrame
 {
 	private static final long serialVersionUID = 1L;
@@ -43,7 +45,10 @@ public class HomeView extends JFrame
 	{
 		this.modules = modules;
 	}
-	
+
+	/**
+	 * Initialise the GUI
+	 */
 	public void initGUI()
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -5,6 +5,9 @@ import controller.module.PresentationController;
 
 public class PresentationModule extends Module
 {
+	/**
+	 * Constructor
+	 */
 	public PresentationModule()
 	{
 		setTitle("Presentation");
@@ -12,6 +15,9 @@ public class PresentationModule extends Module
 		setPriority(8);
 	}
 
+	/**
+	 * Get Controller associated with module
+	 */
 	public Controller getController()
 	{
 		return new PresentationController();

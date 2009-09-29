@@ -14,11 +14,9 @@ import view.TrainerView;
 import controller.exporter.Exporter;
 import controller.exporter.PlainExporter;
 
-
 /**
  * The trainer is the main program for voc training
  * @author igor
- * @todo move sysout stuff to a new cli-view
  */
 public class TrainerController extends Controller
 {
@@ -32,8 +30,14 @@ public class TrainerController extends Controller
 	 */
 	private boolean random = true;
 	
+	/**
+	 * The window
+	 */
 	private TrainerView view;
 	
+	/**
+	 * The current index
+	 */
 	private int index = 0;
 	
 	/**
@@ -48,16 +52,15 @@ public class TrainerController extends Controller
 	/**
 	 * Launch the module
 	 */
-	public void launch(Book book)
+	public void launch()
 	{
-		setBook(book);
-		if (book.getName().endsWith("_wrong"))
+		if (getBook().getName().endsWith("_wrong"))
 		{
-			wrongAnswers.setName(book.getName());
+			wrongAnswers.setName(getBook().getName());
 		}
 		else
 		{
-			wrongAnswers.setName(book.getName() + "_wrong");
+			wrongAnswers.setName(getBook().getName() + "_wrong");
 		}
 		
 		// reset
@@ -73,17 +76,17 @@ public class TrainerController extends Controller
 		// shuffle book
 		if (random)
 		{
-			book.shuffle();
+			getBook().shuffle();
 		}
 		
 		Word word = thisWord();
 		view.setHome(word.getHome());
-		
-		/**
-		 * @todo display wrong words
-		 */
 	}
 	
+	/**
+	 * Get the next word
+	 * @return next word
+	 */
 	private Word nextWord()
 	{
 		if (index + 1 == getBook().size())
@@ -94,6 +97,10 @@ public class TrainerController extends Controller
 		return getBook().get(++index);
 	}
 	
+	/**
+	 * Get the current word
+	 * @return current word
+	 */
 	private Word thisWord()
 	{
 		if (index == getBook().size())
@@ -104,14 +111,29 @@ public class TrainerController extends Controller
 		return getBook().get(index);
 	}
 	
+	/**
+	 * Listener for the trainer
+	 */
 	private class NextListener implements ActionListener, KeyListener
 	{
+		/**
+		 * Was the last word wrong
+		 */
 		private boolean lastWrong = false;
 		
+		/**
+		 * The current word
+		 */
 		private Word word;
 		
+		/**
+		 * window that is displayed at the end
+		 */
 		private TrainerEndView endView;
 		
+		/**
+		 * Main loop
+		 */
 		public void perform()
 		{
 			String input = view.getForeign();
@@ -141,6 +163,9 @@ public class TrainerController extends Controller
 			next();
 		}
 		
+		/**
+		 * Get the next word
+		 */
 		private void next()
 		{
 			word = nextWord();
@@ -157,9 +182,12 @@ public class TrainerController extends Controller
 			view.requestForeignFocus();
 		}
 		
+		/**
+		 * End the trainer session
+		 */
 		private void endSession()
 		{
-			view.setVisible(false);
+			view.dispose();
 			
 			endView = new TrainerEndView();
 			endView.initGUI();
@@ -167,8 +195,9 @@ public class TrainerController extends Controller
 				public void actionPerformed(ActionEvent e)
 				{
 					TrainerController trainer = new TrainerController();
-					trainer.launch(wrongAnswers);
-					endView.setVisible(false);
+					trainer.setBook(wrongAnswers);
+					trainer.launch();
+					endView.dispose();
 				}
 			});
 			endView.addSaveActionListener(new ActionListener() {
@@ -189,13 +218,13 @@ public class TrainerController extends Controller
 							e1.printStackTrace();
 						}
 					}
-					endView.setVisible(false);
+					endView.dispose();
 				}
 			});
 			endView.addCancelActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e)
 				{
-					endView.setVisible(false);
+					endView.dispose();
 				}
 			});
 		}

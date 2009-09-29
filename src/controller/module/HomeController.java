@@ -18,16 +18,30 @@ import view.HomeView;
 import controller.tool.Loader;
 
 /**
- * The home screen
+ * The home screen controller
+ * Not really a controller because it's not a module
  * @author igor
  */
 public class HomeController
 {
+	/**
+	 * the current book
+	 */
 	private Book book;
+	
+	/**
+	 * List of used modules
+	 */
 	private ArrayList<Module> modules = new ArrayList<Module>();
 	
+	/**
+	 * The main window
+	 */
 	private HomeView view;
 	
+	/**
+	 * Constructor
+	 */
 	public HomeController()
 	{
 		// add modules dynamically
@@ -65,7 +79,9 @@ public class HomeController
 		view.addStartActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				view.getSelectedModule().getController().launch(getBook());
+				// launch module when start is pressed
+				view.getSelectedModule().getController().setBook(getBook());
+				view.getSelectedModule().getController().launch();
 			}
 		});
 		
@@ -74,6 +90,7 @@ public class HomeController
 			{
 				if (!e.getValueIsAdjusting())
 				{
+					// update description when list is selected
 					view.setDesc(view.getSelectedModule().getDescription());
 				}
 			}
@@ -109,16 +126,28 @@ public class HomeController
 		});
 	}
 	
+	/**
+	 * set the book
+	 * @param book
+	 */
 	private void setBook(Book book)
 	{
 		this.book = book;
 	}
 	
+	/**
+	 * get the book
+	 * @return
+	 */
 	private Book getBook()
 	{
 		return book;
 	}
 	
+	/**
+	 * The main main method
+	 * @param args
+	 */
 	public static void main(String[] args)
 	{
 		try

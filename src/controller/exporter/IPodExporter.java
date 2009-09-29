@@ -10,16 +10,25 @@ import java.nio.charset.CharsetEncoder;
 
 import model.Word;
 
+/**
+ * Export to iPod notes, view your cards on your ipod
+ */
 public class IPodExporter extends Exporter
 {
-	Charset charset;
-	CharsetDecoder decoder;
-	CharsetEncoder encoder;
-	
-	public IPodExporter()
-	{
-		
-	}
+	/**
+	 * Needed for charset conversion
+	 */
+	private Charset charset;
+
+	/**
+	 * Needed for charset conversion
+	 */
+	private CharsetDecoder decoder;
+
+	/**
+	 * Needed for charset conversion
+	 */
+	private CharsetEncoder encoder;
 	
 	public void export(File destination) throws Exception
 	{
@@ -54,6 +63,11 @@ public class IPodExporter extends Exporter
 		writeFile(file, contents);
 	}
 	
+	/**
+	 * Convert from UTF-8 to ISO-8859-1
+	 * @param input
+	 * @return encoded String
+	 */
 	private String encode(String input)
 	{
 		// für umwandlung von UTF-8 nach ISO-8859-1

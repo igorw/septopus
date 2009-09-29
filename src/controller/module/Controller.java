@@ -2,6 +2,9 @@ package controller.module;
 
 import model.Book;
 
+/**
+ * Abstract Controller
+ */
 public abstract class Controller
 {
 	/**
@@ -18,10 +21,17 @@ public abstract class Controller
 		this.book = book;
 	}
 	
+	/**
+	 * Get the book
+	 * @return book
+	 */
 	public Book getBook()
 	{
 		return book;
 	}
 
-	public abstract void launch(Book book);
+	/**
+	 * Launch the controller
+	 */
+	public abstract void launch();
 }

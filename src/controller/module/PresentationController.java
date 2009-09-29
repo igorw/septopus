@@ -1,9 +1,11 @@
 package controller.module;
 
-import model.Book;
 import model.Word;
 import view.PresentationView;
 
+/**
+ * Controller for the presentation
+ */
 public class PresentationController extends Controller
 {
 	/**
@@ -16,8 +18,15 @@ public class PresentationController extends Controller
 	 */
 	private Word word;
 	
+	/**
+	 * The window
+	 */
 	private PresentationView view;
 	
+	/**
+	 * increment word
+	 * @return word was updated
+	 */
 	public boolean nextWord()
 	{
 		boolean result;
@@ -41,10 +50,8 @@ public class PresentationController extends Controller
 		return result;
 	}
 
-	public void launch(Book book)
+	public void launch()
 	{
-		setBook(book);
-		
 		// reset
 		i = 0;
 		

@@ -5,7 +5,6 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
-import model.Book;
 import controller.exporter.Exporter;
 import controller.exporter.FlashcardExporter;
 import controller.exporter.IPodExporter;
@@ -16,13 +15,11 @@ import controller.exporter.LatexExporter;
  */
 public class ExportController extends Controller
 {
-	public void launch(Book book)
+	public void launch()
 	{
-		setBook(book);
-		
 		JFileChooser chooser = new JFileChooser();
 
-		chooser.setSelectedFile(new File(book.getName()));
+		chooser.setSelectedFile(new File(getBook().getName()));
 		chooser.addChoosableFileFilter(new IPodFilter());
 		chooser.addChoosableFileFilter(new LatexFilter());
 		chooser.addChoosableFileFilter(new FlashcardFilter());
@@ -34,7 +31,7 @@ public class ExportController extends Controller
 			ExportFilter filter = (ExportFilter) chooser.getFileFilter();
 			
 			Exporter ex = filter.getExporter();
-			ex.setBook(book);
+			ex.setBook(getBook());
 			
 			try
 			{
@@ -53,12 +50,18 @@ public class ExportController extends Controller
 		}
 	}
 	
+	/**
+	 * Abstract FileFilter for exporting
+	 */
 	private abstract class ExportFilter extends FileFilter
 	{
 		public abstract String getExtension();
 		public abstract Exporter getExporter();
 	}
 	
+	/**
+	 * Filter for LaTeX files
+	 */
 	private class LatexFilter extends ExportFilter
 	{
 		public boolean accept(File f)
@@ -92,6 +95,9 @@ public class ExportController extends Controller
 		}
 	}
 	
+	/**
+	 * Filter for LaTeX flashcard files
+	 */
 	private class FlashcardFilter extends ExportFilter
 	{
 		public boolean accept(File f)
@@ -125,6 +131,9 @@ public class ExportController extends Controller
 		}
 	}
 	
+	/**
+	 * Filter for the iPod
+	 */
 	private class IPodFilter extends ExportFilter
 	{
 		public boolean accept(File f)

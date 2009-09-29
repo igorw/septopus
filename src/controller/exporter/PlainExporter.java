@@ -6,6 +6,9 @@ import java.io.FileWriter;
 
 import model.Word;
 
+/**
+ * Export as standard book file
+ */
 public class PlainExporter extends Exporter
 {
 	public void export(File destination) throws Exception

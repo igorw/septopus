@@ -5,6 +5,9 @@ import controller.module.TrainerController;
 
 public class TrainerModule extends Module
 {
+	/**
+	 * Constructor
+	 */
 	public TrainerModule()
 	{
 		setTitle("Trainer");
@@ -12,6 +15,9 @@ public class TrainerModule extends Module
 		setPriority(9);
 	}
 
+	/**
+	 * Get Controller associated with module
+	 */
 	public Controller getController()
 	{
 		return new TrainerController();

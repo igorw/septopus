@@ -7,6 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/**
+ * The trainer end options window
+ */
 public class TrainerEndView extends JFrame
 {
 	private static final long serialVersionUID = 1L;
@@ -14,7 +17,10 @@ public class TrainerEndView extends JFrame
 	private JButton btRetry = new JButton("Retry");
 	private JButton btSave = new JButton("Save");
 	private JButton btCancel = new JButton("Cancel");
-	
+
+	/**
+	 * Initialise the GUI
+	 */
 	public void initGUI()
 	{
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

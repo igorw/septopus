@@ -3,3 +3,5 @@ doc
 userdoc
 .classpath
 .project
+.euml2
+.umlproject

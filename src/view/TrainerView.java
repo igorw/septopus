@@ -11,6 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * The window for the trainer
+ */
 public class TrainerView extends JFrame
 {
 	private static final long serialVersionUID = 1L;
@@ -20,6 +23,9 @@ public class TrainerView extends JFrame
 	private JTextField tfForeign;
 	private JLabel lbHome;
 
+	/**
+	 * Initialise the GUI
+	 */
 	public void initGUI()
 	{
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
