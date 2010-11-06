@@ -70,7 +70,7 @@ public class AboutView extends JFrame
 				
 				try
 				{
-					BufferedReader bufRead = new BufferedReader(new FileReader(new File("COPYING")));
+					BufferedReader bufRead = new BufferedReader(new FileReader(new File("LICENSE")));
 					String line;
 					while (null != (line = bufRead.readLine()))
 					{
